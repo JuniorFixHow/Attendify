@@ -1,0 +1,29 @@
+.login{
+    width: 100%;
+    height: 100vh;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+.login-container{
+    border-width: 2px;
+    border-color: #0D004F;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2rem;
+    box-shadow: 2px 4px 9px rgba(0, 0, 0, 0.25);
+    border-radius: 1rem;
+    gap: 0.5rem;
+    width: 17rem;
+}
+.input-container{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: center;
+    gap: 0.2rem;
+}
