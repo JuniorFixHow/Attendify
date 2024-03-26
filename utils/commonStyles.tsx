@@ -1,0 +1,154 @@
+import { StyleSheet } from "react-native"
+import { Colours } from "./Colours"
+
+export const styles = StyleSheet.create({
+    main:{
+        flex:1,
+        alignItems:'center',
+        flexDirection:'column',
+        marginTop:50,
+        width:'100%',
+        backgroundColor:'#fff'
+    },
+    container:{
+        alignItems:'center',
+        justifyContent:'center',
+        // backgroundColor:'red',
+        flexGrow:1,
+        width:'100%'
+    },
+    mini_container:{
+        alignItems:'center',
+        // justifyContent:'center',
+        // backgroundColor:'red',
+        flexGrow:1,
+        width:'100%',
+        marginTop:20,
+    },
+    session_box:{
+        width:'70%',
+        alignItems:'center',
+        // height:200,
+        marginTop:20,
+        justifyContent:'center',
+        borderRadius:10,
+        paddingHorizontal:8,
+        paddingVertical:5,
+        elevation:5,
+    },
+    mainText:{
+        fontSize:18,
+        color:Colours.primary,
+        fontWeight:'600',
+        width:'90%'
+    },
+    mini_Text:{
+        fontSize:18,
+        color:Colours.primary,
+        fontWeight:'600',        
+    },
+    mini_Title:{
+        fontSize:18,
+        color:'#fff',
+        fontWeight:'600',        
+    },
+    card:{
+        width:'90%',
+        height:'70%',
+        borderWidth:2,
+        borderColor:Colours.primary,
+        borderRadius:10,
+        marginTop:20,
+        alignItems:'center',
+        gap:10,
+    },
+
+    text_container:{
+        width:'95%',
+        justifyContent:'center',
+        alignSelf:'center',
+        gap:5,
+        flexDirection:'column',
+    },
+    input:{
+        width:'100%',
+        fontSize:18,
+        color:Colours.input,
+        borderWidth:1,
+        borderColor:Colours.primary,
+        borderRadius:3,
+        paddingVertical:3,
+        paddingHorizontal:8,
+    },
+
+    inside_container:{
+        width:'100%',
+        marginTop:20,
+        alignItems:'center',
+        justifyContent:'center',
+        flexDirection:'column',
+        gap:10,
+    },
+
+    button:{
+        width:'70%',
+        paddingVertical:5,
+        justifyContent:'center',
+        alignItems:'center',
+        backgroundColor:Colours.primary,
+        borderRadius:4,
+    },
+    mainmodal:{
+        position:'absolute',
+        width:'100%',
+        height:'100%',
+        alignItems:'center',
+        justifyContent:'center',
+        backgroundColor:'#000000aa'
+    },
+    noti:{
+        width:'100%',
+        paddingVertical:5,
+        paddingHorizontal:8,
+        elevation:5,
+        backgroundColor:'#fff',
+        marginTop:10,
+        borderRadius:5,
+    },
+    noti_title:{
+        fontSize:18,
+        color:Colours.primary,
+    },
+    noti_box:{
+        width:'100%'
+    },
+    noti_content:{
+        fontSize:15,
+        marginVertical:5,
+    },
+    pages:{
+        width:'100%',
+        alignItems:'center',
+        // justifyContent:'center',
+    },
+    page_content:{
+        width:'90%',
+        alignItems:'center',
+        justifyContent:'center',
+        alignSelf:'center',
+        // flexGrow:1,
+        gap:20,
+    },
+    dot:{
+        backgroundColor:'grey',
+        width:15,
+        height:15,
+        borderRadius:7
+    },
+    dottoed:{
+        backgroundColor:Colours.primary,
+        width:15,
+        height:15,
+        borderRadius:7
+    },
+})
