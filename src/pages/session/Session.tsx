@@ -128,13 +128,16 @@ const Session = () => {
             if(sessionId && session){
                 const sessionRef = doc(db, 'Sessions', sessionId);
                 await updateDoc(sessionRef, {ongoing:false});
-
-                students.forEach(async(student)=>{
-                    await addDoc(collection(db, 'Students', student.sID.toString(), 'Notifications'),{
-                        title:`Attendance Canceled`, body:`Attendance for ${session.code} has been canceled`,
-                        start:session.start, end: new Date().toString(), read: false
+                const futureDate = new Date(session?.end);
+                const now = new Date();
+                if(futureDate > now ){    
+                    students.forEach(async(student)=>{
+                        await addDoc(collection(db, 'Students', student.sID.toString(), 'Notifications'),{
+                            title:`Attendance Canceled`, body:`Attendance for ${session.code} has been canceled`,
+                            start:session.start, end: new Date().toString(), read: false
+                        })
                     })
-                })
+                }
             }    
         } catch (error) {
             console.log(error)
