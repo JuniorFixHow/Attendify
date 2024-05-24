@@ -3,9 +3,6 @@ import './home.css';
 import { MdAddBox } from "react-icons/md";
 import { FaBookOpen } from "react-icons/fa";
 import { CiSearch } from "react-icons/ci";
-import { AttendanceRecords } from '../../data/dummy';
-import { IoFolderSharp } from "react-icons/io5";
-import { HiMiniPrinter } from "react-icons/hi2";
 import { RiDeleteBin5Fill } from "react-icons/ri";
 import NewSession from '../../components/new/New';
 import { useContext, useEffect, useState } from 'react';
@@ -14,30 +11,31 @@ import { IoMdLogOut } from "react-icons/io";
 import { AuthContext } from '../../context/AuthContext';
 import { collection, deleteDoc, doc, getDocs, onSnapshot, query, where } from 'firebase/firestore';
 import { db } from '../../../firebase';
-import { sessionProps } from '../../types/Types';
 import { FaPenToSquare } from "react-icons/fa6";
 import { AiOutlineInfoCircle } from "react-icons/ai";
+import { sessionProps } from '../../types/Types';
 
 const Home = () => {
     const navigate = useNavigate();
     const [showNew, setShowNew] = useState<boolean>(false);
     const {dispatch, user} = useContext(AuthContext);
     const [showCourses, setShowCourses] = useState<boolean>(false)
+    const [search, setSearch] = useState<string>('')
 
-    const [sessions, ssetSessions] = useState([])
+    const [sessions, ssetSessions] = useState<sessionProps>([])
     const [courses, setCourses] = useState([])
     useEffect(()=>{
       
         const reference = collection(db, 'Sessions');
-        // const q = query(reference, where('creator', '==', u))
+        const q = query(reference, where('lecID', '==', user?.lecID))
         const unsub = onSnapshot(
-            reference,  (snapshot)=>{
-                let list = [];
+            q,  (snapshot)=>{
+                let list:sessionProps = [];
                 snapshot.docs.forEach((doc)=>{
-                    list.push({id:doc.id, ...doc.data()})
+                    list.push({id:doc.id, ...doc.data()} as sessionProps[0] )
                 })
                 // console.log(list)
-                ssetSessions(list);
+                ssetSessions(list.sort((a, b)=> new Date(a.end) < new Date(b.end) ? 1:-1));
                 
             },
             (error)=>{
@@ -115,7 +113,7 @@ const Home = () => {
                     <MdAddBox onClick={handleNew} className='dash-icon' color='#0D004F' />
                     <div className="search-container">
                         <CiSearch size={24} />
-                        <input type="text" placeholder='search by date' className='search-input' />
+                        <input onChange={(e)=>setSearch(e.target.value)} type="text" placeholder='search session by course ID' className='search-input' />
                     </div>
 
                     <IoMdLogOut onClick={()=>dispatch({type:'LOGOUT'})} className='dash-icon' color='#0D004F' />
@@ -126,8 +124,13 @@ const Home = () => {
                 <>
                     {
                     courses.length>0 ?
-                    courses?.map(item=>(
-                        <div key={item?.code} className="down">
+                    courses?.filter((item)=>{
+                        return search === ''? item : Object.values(item)
+                        .join(' ')
+                        .toLowerCase() 
+                        .includes(search.toLowerCase())})
+                        .map(item=>(
+                        <div key={item?.id} className="down">
                         <div className="top-leftt">
                             <span>{item?.code}</span>
                         </div>
@@ -147,9 +150,15 @@ const Home = () => {
                 <>
                 {
                     sessions.length>0 ?
-                    sessions?.map(item=>(
+                    
+                    sessions?.filter((item)=>{
+                        return search === ''? item : Object.values(item)
+                        .join(' ')
+                        .toLowerCase() 
+                        .includes(search.toLowerCase())})
+                    .map((item)=>(
                         <div key={item?.id} className="down">
-                        <div onClick={()=>navigate(`/sessions/${item.id}`, {state:{end:item.end}})} className="top-left">
+                        <div onClick={()=>navigate(`/sessions/${item.id}`, {state:{end:item.end, ongoing:item.ongoing}})} className="top-left">
                             <span>{new Date(item?.start).toDateString()}</span>
                         </div>
                         <div className="top-right">
@@ -157,8 +166,7 @@ const Home = () => {
                                 item.ongoing &&
                                 <AiOutlineInfoCircle size={24} color='red' />
                             }
-                            <IoFolderSharp className='dash-icon' color='green' />
-                            <HiMiniPrinter className='dash-icon' color='#0D004F' />
+                            
                             <RiDeleteBin5Fill onClick={()=>deleteData(item.id, 'Sessions')} className='dash-icon' color='crimson' />
                         </div>
                     </div>

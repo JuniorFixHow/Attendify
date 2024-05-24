@@ -2,9 +2,9 @@ import React, { ChangeEvent, ChangeEventHandler, useContext, useEffect, useRef, 
 import Button from '../../components/button/Button'
 import Header from '../../components/header/Header'
 import './new.css'
-import { sessionProps } from '../../types/Types'
+import { courseProps, sessionProps, studentProps } from '../../types/Types'
 import { AuthContext } from '../../context/AuthContext'
-import { addDoc,  collection, getDocs, query, where } from 'firebase/firestore'
+import { Timestamp, addDoc,  collection, getDocs, query, where } from 'firebase/firestore'
 import { db } from '../../../firebase'
 
 type newProps ={
@@ -25,7 +25,8 @@ const NewSession = ({showNew, setShowNew}:newProps) => {
     const [success, setSuccess] = useState<string>('');
     const [latitude, setLatitude] = useState<number>(0);
     const [longitude, setLongitude] = useState<number>(0);
-    const [courses, setCourses] = useState([]);
+    const [courses, setCourses] = useState<courseProps>([]);
+    const [students, setStudents] = useState<studentProps>([]);
   
 
     useEffect(()=>{
@@ -33,14 +34,29 @@ const NewSession = ({showNew, setShowNew}:newProps) => {
             const sessionRef = collection(db, "Courses")
             const q = query(sessionRef, where("lecID", "==", user.lecID));
             const mycourses = await getDocs(q);
-            const list = []
+            const list:courseProps = []
             if(!mycourses.empty){
                 mycourses.forEach((doc)=>{
-                    list.push(doc.data());
+                    const data = doc.data() as courseProps[0]
+                    list.push(data);
                 })
                 setCourses(list);
             }
         }
+        const fetchStudents = async()=>{
+            const sessionRef = collection(db, "Students")
+            // const q = query(sessionRef, where("lecID", "==", user.lecID));
+            const mycourses = await getDocs(sessionRef);
+            const list:studentProps = []
+            if(!mycourses.empty){
+                mycourses.forEach((doc)=>{
+                    const data = doc.data() as studentProps[0]
+                    list.push(data);
+                })
+                setStudents(list);
+            }
+        }
+        fetchStudents();
         fetchCourses();
         
     },[])
@@ -83,9 +99,9 @@ const NewSession = ({showNew, setShowNew}:newProps) => {
         setLoading(true);
         const data = {
             reward, code, start:startDate, end:endDate, lecID:user.lecID,
-            ongoing:true, student:[], position:{
+            ongoing:true, students:[{id:0, time: Timestamp.fromDate(new Date())}], position:{
                 long:longitude, lat:latitude
-            }
+            }, list:[0]
         }
         try {
             const sessionRef = collection(db, "Sessions")
@@ -95,6 +111,12 @@ const NewSession = ({showNew, setShowNew}:newProps) => {
                 await addDoc(collection(db, 'Sessions'), data);
                 setSuccess('Session created!');
                 setError('');
+                students.forEach(async(student)=>{
+                    await addDoc(collection(db, 'Students', student.sID.toString(), 'Notifications'),{
+                        title:`Attendance Scheduled`, body:`Attendance started for ${data.code}`,
+                        start:data.start, end: data.end, read: false
+                    })
+                })
                 formRef.current?.reset();
             }
             else{

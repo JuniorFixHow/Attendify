@@ -1,4 +1,7 @@
 module.exports = {
+  externals: {
+    'prop-types': 'PropTypes',
+  },
   root: true,
   env: { browser: true, es2020: true },
   extends: [

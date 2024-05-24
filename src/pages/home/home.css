@@ -89,3 +89,31 @@
     display: flex;
     justify-content: center;
 }
+
+@media screen and (max-width:1024px) {
+    .home .top{
+        width: 95%;
+        align-self: center;
+        display: flex;
+       flex-direction: column;
+       gap: 0.5rem;
+       padding: 0.5rem 0;
+    }
+
+    .home .top-right{
+        gap: 0.8rem;
+        align-self: center;
+    }
+    .home .search-input{
+        font-size: 0.9rem;
+    }
+    .home .down{
+        width: 95%;
+    }
+
+    .home .top-left{
+        color: #fff;
+        font-weight: 500;
+        width: 10rem;
+    }
+}
