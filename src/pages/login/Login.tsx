@@ -58,7 +58,7 @@ const Login = () => {
             </div>
             <div className="input-container">
                 <span className="label">Pin</span>
-                <input name='pin' onChange={handleTextChange} type="number" maxLength={5}  min={0} placeholder='enter pin' className='input' />
+                <input name='pin' onChange={handleTextChange} type="password" maxLength={5}  min={0} placeholder='enter pin' className='input' />
             </div>
             {
                 error && <span className="error">{error}</span>
