@@ -147,3 +147,18 @@ export const NotificationData = [
         read:false
     },
 ]
+
+const daat =[
+    {
+        id:1,
+        students:[1234, 1067, 3321]
+    },
+    {
+        id:2,
+        students:[1112, 5067, 3345]
+    },
+    {
+        id:3,
+        students:[1113, 1067, 9083]
+    },
+]

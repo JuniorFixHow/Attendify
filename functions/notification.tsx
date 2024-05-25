@@ -1,11 +1,6 @@
 import * as Notifications from 'expo-notifications';
 
-type notiProps={
-    title:string,
-    body:string
-}
-
-export const handleNotifications = async({title, body}:notiProps)=>{
+export const handleNotifications = async(title:string, body:string)=>{
     try { 
           await Notifications.scheduleNotificationAsync({
             content: {

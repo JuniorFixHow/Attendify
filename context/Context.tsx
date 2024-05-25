@@ -13,6 +13,7 @@ type contextProps = {
     user:userProps | null,
     onboardUser:()=>void,
     authInitialized:boolean,
+    loading:boolean,
 }
 export const AuthContext = createContext<contextProps | null>(null)
 export const AuthContextProvider = ({children}:childrenProp) =>{
@@ -78,22 +79,34 @@ export const AuthContextProvider = ({children}:childrenProp) =>{
         },[rootNavigation]);
 
         useEffect(()=>{
-            if(!isNavigationReady){
-                return
+            setLoading(true);
+            try {
+                if(!isNavigationReady){
+                    return
+                }
+    
+                const inAuthGroup = segment[0] === '(auth)';
+    
+                if(!authInitialized) return;
+                if(isNew){
+                    router.push('/(auth)/welcome');
+                }else{     
+                    router.push('/(auth)/register');
+                }
+                if(!user && !inAuthGroup){
+                    router.push('/(auth)/register');
+                }else if(user && inAuthGroup){
+                    router.push('/(tabs)');
+                }
+                
+            } catch (error) {
+                console.log(error)
             }
-
-            const inAuthGroup = segment[0] === '(auth)';
-
-            if(!authInitialized) return;
-            if(!isNew){
-                router.push('/(auth)/welcome');
-            }
-            else if(!user && !inAuthGroup){
-                router.push('/(auth)/register');
-            }else if(user && inAuthGroup){
-                router.push('/(tabs)');
+            finally{
+                setLoading(false);
             }
         },[user, segment, authInitialized, isNavigationReady]);
+        // console.log(isNavigationReady)
     };
 
     const isAuth = async()=>{
@@ -128,7 +141,7 @@ export const AuthContextProvider = ({children}:childrenProp) =>{
         isAuth();
     },[]);
 
-    // console.log(user)
+    // console.log(isNew)
 
     // if(loading){
     //     return(
@@ -137,7 +150,7 @@ export const AuthContextProvider = ({children}:childrenProp) =>{
     // }
     useProtectedRoute(user);
     return(
-        <AuthContext.Provider value={{user, onboardUser, logout, setUserData, authInitialized}} >
+        <AuthContext.Provider value={{user, onboardUser, logout, setUserData, loading, authInitialized}} >
             {children}
         </AuthContext.Provider>
     )

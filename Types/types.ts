@@ -1,3 +1,5 @@
+import React from "react"
+
 export interface cardProps {
     isAttendance: boolean,
     isScannedSuccess: boolean,
@@ -12,32 +14,84 @@ export interface cardProps {
 }
 
 export type registerProps={
-    password:string,
-    cpassword:string,
-    onChangeRegister:React.Dispatch<React.SetStateAction<string>>,
-    onChageCRegister:React.Dispatch<React.SetStateAction<string>>,
+    password:number,
+    cpassword?:number,
+    onChangeRegister:React.Dispatch<React.SetStateAction<number>>,
+    onChageCRegister:React.Dispatch<React.SetStateAction<number>>,
     onShowRegister:React.Dispatch<React.SetStateAction<boolean>>,
     showRegister:boolean,
-    onPress:()=>void
+    onPress:()=>void,
+    registerError?:string,
+    setRegisterError:React.Dispatch<React.SetStateAction<string>>,
+    registerSuccess?:string,
+    setRegisterSuccess:React.Dispatch<React.SetStateAction<string>>,
+    setRegisterLoading:React.Dispatch<React.SetStateAction<boolean>>,
+    registerLoading?:boolean,
+    labelText1:string,
+    labelText2?:string,
+    showConfirm?:boolean
 }
 export type loginProps={
-    lpassword:string,
-    onChangeLogin:React.Dispatch<React.SetStateAction<string>>,
+    lpassword:number,
+    onChangeLogin:React.Dispatch<React.SetStateAction<number>>,
     onShowLogin:React.Dispatch<React.SetStateAction<boolean>>,
     showLogin:boolean,
-    onPress:()=>void
+    onPress:()=>void,
+    loginError?:string,
+    setLoginError:React.Dispatch<React.SetStateAction<string>>,
+    loginSuccess?:string,
+    setLoginSuccess:React.Dispatch<React.SetStateAction<string>>,
+    setLoginLoading:React.Dispatch<React.SetStateAction<boolean>>,
+    loginLoading?:boolean,
 }
 
 export type sessionProp = {
-    id:number,
-    title:string,
+    id:string,
+    code:string,
+    lecID:number,
     ongoing:boolean,
-    withinRange:boolean
+    reward:number,
+    start:string,
+    end:string,
+    list:number[],
+    students:{sID:number, time:string}[],
+    position:{lat:number, long:number}
+}
+
+  
+export type SessionListProps = {
+    sessionP?: sessionProp[];
+  };
+
+export type sessionProps = {
+    id:string,
+    code:string,
+    lecID:number,
+    ongoing:boolean,
+    reward:number,
+    start:string,
+    end:string,
+    list:number[],
+    students:{sID:number, time:string}[],
+    position:{lat:number, long:number}
 }
 
 export type userProps={
-    sId:number,
+    sID:number,
     device:string,
-    pin:number,
-    biometric:boolean
+    dPin:number,
+    isFinger:boolean
 }
+
+export type attendanceProps={
+    id:number,
+    time:Date
+}[]
+export type NotiProps={
+    id:string,
+    title:string,
+    end:string,
+    start:string,
+    body:string,
+    read:boolean,
+}[]

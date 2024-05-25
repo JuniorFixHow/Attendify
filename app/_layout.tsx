@@ -1,48 +1,15 @@
-import 'expo-firestore-offline-persistence'
-import { SafeAreaView, StyleSheet, Text, View } from 'react-native'
-import React, { useContext, useEffect } from 'react'
-import { SplashScreen, Stack, Tabs } from 'expo-router'
-import { AntDesign } from '@expo/vector-icons';
-import { styles } from '../utils/commonStyles';
-import { StatusBar } from 'expo-status-bar';
-import { AuthContext, AuthContextProvider, authContext } from '../context/Context';
+import 'expo-dev-client'
+import { Slot, Stack } from 'expo-router'
+import React from 'react'
+import { AuthContextProvider } from '../context/AuthContext'
+import { handleBackgroundNotifications } from '../hooks/useNotifications'
 
-SplashScreen.preventAutoHideAsync();
-
-export const RootLayout = ()=>{
-  useEffect(()=>{
-    const timeInterval = setInterval(()=>{
-      SplashScreen.hideAsync();
-    },5000)
-    return ()=>{
-      clearInterval(timeInterval)
-    }
-  },[])
-  
-  return(
+export default function Root() {
+  handleBackgroundNotifications()
+  return (
     <AuthContextProvider>
-      <RootLayoutNav />
+      <Slot />
     </AuthContextProvider>
   )
 }
-
-const RootLayoutNav = () => {
-  const {user, authInitialized} = authContext();
-  
-  if(!user && !authInitialized) return;
-  return (
-      <>
-      <StatusBar style='auto' />
-        <Stack initialRouteName='(tabs)' >
-          <Stack.Screen name='(tabs)' options={{headerShown:false}} />
-          <Stack.Screen name='(auth)' options={{headerShown:false}} />
-          {/* <Stack.Screen name='index' options={{headerShown:false}} /> */}
-          <Stack.Screen name='attendance' options={{headerShown:false}} />
-        </Stack>
-      </>
-
-  )
-}
-
-export default RootLayout
 

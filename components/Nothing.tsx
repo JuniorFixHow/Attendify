@@ -5,12 +5,13 @@ import Header from './Header';
 import NoData from '../assets/imgs/nodata.png';
 
 type nothingProp={
-  title:string
+  title:string,
+  header:string
 }
-const Nothing = ({title}:nothingProp) => {
+const Nothing = ({title, header}:nothingProp) => {
   return (
     <SafeAreaView style={styles.main}>
-        <Header title='Sessions' />
+        <Header title={header} />
         <View style={styles.container} >
             <Image source={NoData} style={{width:'80%', height:350, objectFit:'cover'}} />
             <Text style={styles.mainText} >{title}</Text>

@@ -1,7 +1,7 @@
 import { View, Text } from 'react-native'
 import React from 'react'
-import Nothing from '../../components/Nothing'
-import Sessions from '../../components/Sessions'
+import Nothing from '../../../components/Nothing'
+import Sessions from '../../../components/Sessions'
 
 const Page = () => {
   return (

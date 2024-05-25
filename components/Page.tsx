@@ -6,6 +6,7 @@ import PAGE1 from '../assets/imgs/page1.jpg'
 import PAGE2 from '../assets/imgs/page2.jpg'
 import PAGE3 from '../assets/imgs/page3.jpg'
 import { useRouter } from 'expo-router';
+import { useAuth } from '../context/AuthContext';
 
 
 type pageProps ={
@@ -16,7 +17,12 @@ type pageProps ={
 }
 
 const Pages = ({pagenumber, page, message, onTap}:pageProps) => {
+  const {onboardUser} = useAuth();
     const router = useRouter();
+    const onboardNew = ()=>{
+      onboardUser();
+      router.push('/(app)/(auth)/register');
+    }
   return (
     <SafeAreaView style={styles.main} >
       <Header title='Welcome' />
@@ -31,7 +37,7 @@ const Pages = ({pagenumber, page, message, onTap}:pageProps) => {
         <Text style={{...styles.mainText, fontWeight:'900', textAlign:'center', fontSize:23}} >{message}</Text>
         {
             page === 2 &&
-            <TouchableOpacity onPress={()=>router.push('/')} style={styles.button} >
+            <TouchableOpacity onPress={onboardNew} style={styles.button} >
                 <Text style={{fontSize:18, fontWeight:'800', color:'#fff'}} >Next</Text>
             </TouchableOpacity>
         }

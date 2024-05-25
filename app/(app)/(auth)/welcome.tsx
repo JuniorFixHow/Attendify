@@ -1,12 +1,11 @@
 import React, { useEffect, useRef } from 'react';
 import { StyleSheet, View, Text, SafeAreaView } from 'react-native';
 import PagerView from 'react-native-pager-view';
-import Pages from '../../components/Page';
-import { handleBackgroundNotifications } from '../../hooks/useNotifications';
-import { styles } from '../../utils/commonStyles';
+import Pages from '../../../components/Page';
+import { handleBackgroundNotifications } from '../../../hooks/useNotifications';
+import { styles } from '../../../utils/commonStyles';
 
 const Page = () => {
-    handleBackgroundNotifications()
    
   return (
     <>

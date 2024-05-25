@@ -47,6 +47,16 @@ export const styles = StyleSheet.create({
         color:Colours.primary,
         fontWeight:'600',        
     },
+    caution:{
+        fontSize:20,
+        color:'crimson',
+        fontWeight:'700',        
+    },
+    register_Text:{
+        fontSize:19,
+        color:Colours.primary,
+        fontWeight:'800',        
+    },
     mini_Title:{
         fontSize:18,
         color:'#fff',
@@ -54,7 +64,7 @@ export const styles = StyleSheet.create({
     },
     card:{
         width:'90%',
-        height:'70%',
+        height:'85%',
         borderWidth:2,
         borderColor:Colours.primary,
         borderRadius:10,
@@ -96,6 +106,14 @@ export const styles = StyleSheet.create({
         justifyContent:'center',
         alignItems:'center',
         backgroundColor:Colours.primary,
+        borderRadius:4,
+    },
+    disabled:{
+        width:'70%',
+        paddingVertical:5,
+        justifyContent:'center',
+        alignItems:'center',
+        backgroundColor:'mediumpurple',
         borderRadius:4,
     },
     mainmodal:{
@@ -151,4 +169,26 @@ export const styles = StyleSheet.create({
         height:15,
         borderRadius:7
     },
+    profile_content:{
+        alignItems:'center', 
+        justifyContent:'flex-start', 
+        flexDirection:'row', 
+        backgroundColor:'#F1F1F1',
+        width:'100%',
+        elevation:1,
+        borderRadius:8,
+        paddingVertical:10,
+        paddingHorizontal:5,
+        alignSelf:'center'
+    },
+
+    profile_icons:{
+        fontSize:35,
+        color:Colours.primary,
+    },
+    profile_text:{
+        fontSize:22,
+        color:Colours.primary,
+        fontWeight:'600',
+    }
 })
