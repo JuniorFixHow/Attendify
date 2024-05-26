@@ -74,7 +74,7 @@ const Page = () => {
               'Verified', 
               ToastAndroid.LONG, 
               ToastAndroid.TOP, 25, 50);
-              router.replace('/(app)/(tabs)');
+              return true;
             }
     } catch (error) {
         console.log(error);
@@ -137,9 +137,11 @@ const Page = () => {
           if(student.exists() && fingerprint && student.data().device === device ){
             const {sID, isFinger, device, dPin} = student.data();
             const sData = {sID, isFinger, device, dPin};
-            setUserData(sData);
-            await handleFingerPrint();
-            // router.replace('/(app)/(tabs)');
+            const fp = await handleFingerPrint();
+            if(fp){
+              setUserData(sData);
+              router.replace('/(app)/(tabs)');
+            }
           }
           else if(student.exists() && !fingerprint && student.data().device === device && student.data().dPin !==0 ){
             setShowLogin(true)
@@ -157,9 +159,11 @@ const Page = () => {
             }
             const regRef = doc(db, 'Students', sID.toString());
             await setDoc(regRef, data);
-            setUserData(data);
-            // router.replace('/(app)/(tabs)')
-            await handleFingerPrint();
+            const fp = await handleFingerPrint();
+            if(fp){
+              setUserData(data);
+              router.replace('/(app)/(tabs)')
+            }
           }
           else if(student.exists() && fingerprint && student.data().device !== device ){
             ToastAndroid.show('The ID and the fingerprint data mismatch!', 10000)
